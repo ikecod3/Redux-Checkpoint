@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
 import { Button, Select } from "antd";
 import TodoModal from "./ui/TodoModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterTodo } from "../features/todo/todoSlice";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { FilterContext } from "../App";
 
 const AddTask = () => {
+  const { filterIsDone, setFilterIsDone } = useContext(FilterContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filterIsDone, setFilterIsDone] = useState("All Todo Task");
   const dispatch = useDispatch();
 
   const showModal = () => {
@@ -62,11 +64,12 @@ const AddTask = () => {
         />
       </div>
 
-      {/* Use the TodoModal component */}
-      {/*  Render a TodoModal component with the following props: 
+      {/* Use the TodoModal component -->
+        Render a TodoModal component with the following props: 
       `visible`: Controls the visibility of the modal, derived from the state `isModalOpen`.  
       `setIsModalOpen`: Callback function to update the `isModalOpen` state and control modal visibility. 
-      `title`: Specifies the title of the modal, indicating it's intended for Add a todo task.  */}
+      `title`: Specifies the title of the modal, indicating it's intended for Add a todo task.  
+      */}
       <TodoModal
         visible={isModalOpen}
         title={"Add"}

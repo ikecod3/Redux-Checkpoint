@@ -9,14 +9,16 @@ import {
 } from "../features/todo/todoSlice";
 import { useDispatch } from "react-redux";
 import TodoModal from "./ui/TodoModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   CheckCircleOutlined,
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import { FilterContext } from "../App";
 
 const Task = ({ todo }) => {
+  const { filterIsDone } = useContext(FilterContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // The useDispatch hook provides a reference to the Redux store's dispatch function.
@@ -38,8 +40,10 @@ const Task = ({ todo }) => {
   const toggleTodoStatus = () => {
     // Dispatch updateTodoStatus action to update todo completion status
     dispatch(updateTodoStatus(todo.id));
-    // Additionally, dispatch an action to filter todos based on their completion status.
-    dispatch(filterTodo({ isDone: todo.isDone }));
+    // If the current filter option is not set to "All Todo Tasks"),
+    // dispatches an action to filter todos based on their completion status.
+    filterIsDone !== "All Todo Task" &&
+      dispatch(filterTodo({ isDone: todo.isDone }));
   };
 
   // Function to set the state and open the modal when called,
@@ -48,8 +52,7 @@ const Task = ({ todo }) => {
     setIsModalOpen(true);
   };
 
-  // function to format the time a task was created
-  /**
+  /** functional component to format the time a task was created
    * Returns a human-readable relative time string indicating the time difference
    * between the provided 'time' and the current date, formatted with 'date-fns'.
    * param {string | number | Date} time - The timestamp or Date object to calculate relative time since a tod0 task created. It returns {string} - A string representation of the relative time, e.g., "2 hours ago".

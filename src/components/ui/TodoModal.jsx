@@ -18,22 +18,26 @@ const TodoModal = ({
   const [messageApi, contextHolder] = message.useMessage();
 
   const dispatch = useDispatch(); // dispatch some action from our todoSlice
+
   const handleCancel = () => {
     if (title.toLowerCase().includes("update")) {
+      // If the modal title contains "update", retrieve the original todo descriptin and set it to the input filed values
       setDescription(todo?.description);
       setIsDone(todo?.isDone);
       setIsModalOpen(false);
       return;
     }
-
+    // For other cases, reset the modal fields and close the modal.
     setDescription("");
     setIsDone(false);
     setIsModalOpen(false);
   };
 
+  // Handles the confirm action for the modal.
   const handleOk = () => {
     if (description) {
       if (title.toLowerCase().includes("update")) {
+        // If the title includes 'update', dispatch editTodo action with updated values and close the modal.
         dispatch(
           editTodo({
             ...todo,
@@ -43,11 +47,11 @@ const TodoModal = ({
           })
         );
 
-        // handleCancel(); // Close the modal
         setIsModalOpen(false); // close the modal
         return;
       }
 
+      // If adding a new todo, dispatch addTodo action with new values.
       dispatch(
         addTodo({
           id: nanoid(),

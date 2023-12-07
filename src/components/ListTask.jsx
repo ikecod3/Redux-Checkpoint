@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import { Empty } from "antd";
 import Task from "./Task";
@@ -17,10 +18,10 @@ const ListTask = () => {
 
   return (
     <div>
-      {/* 
-  // Render the todo tasks based on the sorted todo list.
-  // If there are sorted todos, map through the list and render Task components for each todo.
-  // If there are no todos or the list is empty, display a message indicating no todo tasks are found. */}
+      {/* Render the todo tasks based on the sorted todo list. 
+      If there are sorted todos, map through the list and render Task components for each todo.
+      If there are no todos or the list is empty, display a message indicating no todo tasks are found. */}
+
       {sortTodoList && sortTodoList.length > 0 ? (
         sortTodoList.map((todo) => <Task key={todo.id} todo={todo} />)
       ) : (
